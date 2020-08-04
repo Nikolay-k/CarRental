@@ -1,0 +1,82 @@
+﻿<div id="orderEditComponent" class="mx-auto py-md-5 py-3">
+    <div class="row">
+        <form-response class="col" [model]="result"></form-response>
+    </div>
+    <h2 *ngIf="model.id == 0" class="text-center">New order</h2>
+    <h2 *ngIf="model.id != 0" class="text-center">Order {{ model.id }}</h2>
+    <form (ngSubmit)="onSubmit()" #form="ngForm">
+        <div class="form-group row">
+            <label class="col-md-3 col-form-label required" for="UserId">User</label>
+            <div class="col-md">
+                <select class="form-control" id="UserId" name="UserId" required [(ngModel)]="model.userId" #userId="ngModel">
+                    <option *ngFor="let userSelectItem of bag.users" [value]="userSelectItem.value">{{userSelectItem.text}}</option>
+                </select>
+                <div>
+                    <ul *ngIf="userId.invalid && (userId.dirty || userId.touched)" class="list-unstyled">
+                        <li *ngIf="userId.errors.required" class="invalid-tooltip">The User field is required.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-3 col-form-label required" for="CarId">Car</label>
+            <div class="col-md">
+                <select class="form-control" id="CarId" name="CarId" required [(ngModel)]="model.carId" #carId="ngModel">
+                    <option *ngFor="let carSelectItem of bag.cars" [value]="carSelectItem.value">{{carSelectItem.text}}</option>
+                </select>
+                <div>
+                    <ul *ngIf="carId.invalid && (carId.dirty || carId.touched)" class="list-unstyled">
+                        <li *ngIf="carId.errors.required" class="invalid-tooltip">The Car field is required.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-3 col-form-label col-form-label-condensed required" for="RentalStartDate">Rental start date</label>
+            <div class="col-md">
+                <div class="input-group">
+                    <input ngbDatepicker #rentalStartDateNgbDatepicker="ngbDatepicker" class="form-control has-input-group" readonly type="text" id="RentalStartDate" name="RentalStartDate" required [(ngModel)]="model.rentalStartDate" #rentalStartDate="ngModel" />
+                    <div class="input-group-append">
+                        <span class="input-group-text" (click)="rentalStartDateNgbDatepicker.toggle()">
+                            <i class="fas fa-calendar"></i>
+                        </span>
+                    </div>
+                </div>
+                <div>
+                    <ul *ngIf="rentalStartDate.invalid && (rentalStartDate.dirty || rentalStartDate.touched)" class="list-unstyled">
+                        <li *ngIf="rentalStartDate.errors.required" class="invalid-tooltip">The Rental start date field is required.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-3 col-form-label col-form-label-condensed required" for="RentalEndDate">Rental end date</label>
+            <div class="col-md">
+                <div class="input-group">
+                    <input ngbDatepicker #rentalEndDateNgbDatepicker="ngbDatepicker" class="form-control has-input-group" readonly type="text" id="RentalEndDate" name="RentalEndDate" required [(ngModel)]="model.rentalEndDate" #rentalEndDate="ngModel" />
+                    <div class="input-group-append">
+                        <span class="input-group-text" (click)="rentalEndDateNgbDatepicker.toggle()">
+                            <i class="fas fa-calendar"></i>
+                        </span>
+                    </div>
+                </div>
+                <div>
+                    <ul *ngIf="rentalEndDate.invalid && (rentalEndDate.dirty || rentalEndDate.touched)" class="list-unstyled">
+                        <li *ngIf="rentalEndDate.errors.required" class="invalid-tooltip">The Rental end date field is required.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-3 col-form-label" for="Comment">Comment</label>
+            <div class="col-md">
+                <textarea class="form-control" rows="4" id="Comment" name="Comment" maxlength="200" trim [(ngModel)]="model.comment"></textarea>
+            </div>
+        </div>
+        <div class="row">
+            <div class="offset-md-3 col-md">
+                <button class="btn btn-primary btn-round" type="submit" [disabled]="!form.form.valid">Save</button>
+            </div>
+        </div>
+    </form>
+</div>
