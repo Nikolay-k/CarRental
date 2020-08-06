@@ -1,7 +1,10 @@
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using NLog;
+using NLog.Targets;
 using NLog.Web;
 using System;
+using System.Runtime.InteropServices;
 
 namespace CarRental
 {
@@ -10,26 +13,35 @@ namespace CarRental
         public static void Main(string[] args)
         {
             var logger = NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
+
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            {
+                var configuration = LogManager.Configuration;
+                var fileTarget = configuration.FindTargetByName<FileTarget>("log-web");
+                fileTarget.FileName = "/home/logfiles/${shortdate}.log";
+                LogManager.Configuration = configuration;
+            }
+
             try
             {
-                logger.Debug("Api is being initialized");
+                logger.Debug("Site is being initialized");
 
                 var host = CreateWebHostBuilder(args).Build();
 
-                logger.Debug("Api starts");
+                logger.Debug("Site starts");
 
                 host.Run();
 
-                logger.Debug("Api stopped");
+                logger.Debug("Site stopped");
             }
             catch (Exception e)
             {
-                logger.Error(e, "Api stopped because of exception");
-                throw new Exception("Api stopped because of exception", e);
+                logger.Error(e, "Site stopped because of exception");
+                throw new Exception("Site stopped because of exception", e);
             }
             finally
             {
-                NLog.LogManager.Shutdown();
+                LogManager.Shutdown();
             }
         }
 

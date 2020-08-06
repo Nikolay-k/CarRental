@@ -1,58 +1,76 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
-  <PropertyGroup>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
-    <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
-    <TypeScriptToolsVersion>3.1</TypeScriptToolsVersion>
-    <LangVersion>latest</LangVersion>
-    <IsPackable>false</IsPackable>
-    <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>netcoreapp2.2</TargetFramework>
+		<TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
+		<TypeScriptToolsVersion>3.1</TypeScriptToolsVersion>
+		<LangVersion>latest</LangVersion>
+		<IsPackable>false</IsPackable>
+		<AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+	</PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DebugType>full</DebugType>
-    <DebugSymbols>true</DebugSymbols>
-  </PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<DebugType>full</DebugType>
+		<DebugSymbols>true</DebugSymbols>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.All" />
-    <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.4" />
-    <PackageReference Include="NLog" Version="4.6.7" />
-    <PackageReference Include="NLog.Web.AspNetCore" Version="4.9.0" />
-  </ItemGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+		<DebugType>none</DebugType>
+		<DebugSymbols>false</DebugSymbols>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <Folder Include="Views\ClientApp\" />
-  </ItemGroup>
+	<ItemGroup Condition="'$(Configuration)' != 'Debug'">
+		<Content Remove="appsettings.Development.json" />
+		<Content Remove="web.*.config" />
+		<Content Remove="package*.json" />
+		<Content Remove="tsconfig.json" />
+	</ItemGroup>
 
-  <Target Name="DebugWebpackBuild" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug'">
-    <Message Importance="high" Text="Webpack build..." />
-    <Exec Command="node node_modules/webpack/bin/webpack.js --env.environment=development --env.virtualPath=/CarRental" />
-  </Target>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.All" />
+		<PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
+		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.4" />
+		<PackageReference Include="NLog" Version="4.6.7" />
+		<PackageReference Include="NLog.Web.AspNetCore" Version="4.9.0" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <JsLibJqueryFiles Include="node_modules\jquery\dist\**\*.*" />
-    <JsLibPopperFiles Include="node_modules\popper.js\dist\umd\**\*.*" />
-    <JsLibBootstrapFiles Include="node_modules\bootstrap\dist\js\**\*.*" />
-  </ItemGroup>
+	<ItemGroup>
+		<Folder Include="Views\ClientApp\" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\CarRental.Context\CarRental.Context.csproj" />
-    <ProjectReference Include="..\CarRental.Implementation\CarRental.Implementation.csproj" />
-    <ProjectReference Include="..\CarRental.Infrastructure\CarRental.Infrastructure.csproj" />
-  </ItemGroup>
+	<Target Name="DebugWebpackBuild" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug'">
+		<Message Importance="high" Text="Webpack build..." />
+		<Exec Command="node node_modules/webpack/bin/webpack.js --env.environment=development --env.virtualPath=/CarRental" />
+	</Target>
 
-  <ItemGroup>
-    <Content Update="nlog.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
+	<Target Name="ReleaseWebpackBuild" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Release'">
+		<Message Importance="high" Text="Webpack build..." />
+		<Exec Command="npm install" />
+		<Exec Command="node node_modules/webpack/bin/webpack.js --env.environment=production" />
+	</Target>
 
-  <Target Name="CopyJsLibFiles" AfterTargets="Build">
-    <Copy SourceFiles="@(JsLibJqueryFiles)" DestinationFiles="@(JsLibJqueryFiles->'wwwroot\lib\jquery\%(RecursiveDir)%(Filename)%(Extension)')" />
-    <Copy SourceFiles="@(JsLibPopperFiles)" DestinationFiles="@(JsLibPopperFiles->'wwwroot\lib\popper\%(RecursiveDir)%(Filename)%(Extension)')" />
-    <Copy SourceFiles="@(JsLibBootstrapFiles)" DestinationFiles="@(JsLibBootstrapFiles->'wwwroot\lib\bootstrap\%(RecursiveDir)%(Filename)%(Extension)')" />
-  </Target>
+	<ItemGroup>
+		<JsLibJqueryFiles Include="node_modules\jquery\dist\**\*.*" />
+		<JsLibPopperFiles Include="node_modules\popper.js\dist\umd\**\*.*" />
+		<JsLibBootstrapFiles Include="node_modules\bootstrap\dist\js\**\*.*" />
+	</ItemGroup>
+
+	<Target Name="CopyJsLibFiles" AfterTargets="Build">
+		<Copy SourceFiles="@(JsLibJqueryFiles)" DestinationFiles="@(JsLibJqueryFiles->'wwwroot\lib\jquery\%(RecursiveDir)%(Filename)%(Extension)')" />
+		<Copy SourceFiles="@(JsLibPopperFiles)" DestinationFiles="@(JsLibPopperFiles->'wwwroot\lib\popper\%(RecursiveDir)%(Filename)%(Extension)')" />
+		<Copy SourceFiles="@(JsLibBootstrapFiles)" DestinationFiles="@(JsLibBootstrapFiles->'wwwroot\lib\bootstrap\%(RecursiveDir)%(Filename)%(Extension)')" />
+	</Target>
+
+	<ItemGroup>
+		<ProjectReference Include="..\CarRental.Context\CarRental.Context.csproj" />
+		<ProjectReference Include="..\CarRental.Implementation\CarRental.Implementation.csproj" />
+		<ProjectReference Include="..\CarRental.Infrastructure\CarRental.Infrastructure.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Content Update="nlog.config">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
 
 </Project>
