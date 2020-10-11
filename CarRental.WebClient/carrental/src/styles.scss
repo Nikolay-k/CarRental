@@ -1,1 +1,8 @@
-/* You can add global styles to this file, and also import other style files */
+@import "./styles/bootstrap.custom.scss";
+
+$max-width-edit-component: 500px;
+$max-width-alert: 500px;
+
+#orderEditComponent {
+    max-width: $max-width-edit-component;
+}

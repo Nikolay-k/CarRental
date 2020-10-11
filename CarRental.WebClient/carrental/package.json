@@ -21,7 +21,11 @@
     "@angular/router": "~10.1.5",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
-    "zone.js": "~0.10.2"
+    "zone.js": "~0.10.2",
+    "jquery": "3.5.1",
+    "popper.js": "1.16.1",
+    "bootstrap": "4.5.2",
+    "@fortawesome/fontawesome-free": "5.14.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.1001.6",
