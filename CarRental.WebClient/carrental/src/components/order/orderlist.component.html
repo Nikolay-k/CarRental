@@ -1,0 +1,36 @@
+﻿<div id="orderListComponent" class="mx-auto py-md-5 py-3">
+    <div class="row">
+        <app-form-response class="col" [model]="result"></app-form-response>
+    </div>
+    <h2 class="text-center">Order list</h2>
+    <a class="btn btn-primary btn-round" role="button" routerLink="/orders/0"><i class="fas fa-plus-square"></i>&nbsp;New order</a>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Number</th>
+                <th scope="col">User</th>
+                <th scope="col">Car</th>
+                <th scope="col">Rental start date</th>
+                <th scope="col">Rental end date</th>
+                <th scope="col">Comment</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let order of model.orders; index as i">
+                <th scope="row">{{ i + 1 }}</th>
+                <td>{{ order.id }}</td>
+                <td>{{ order.userName }}</td>
+                <td>{{ order.carName }}</td>
+                <td>{{ order.rentalStartDate | date }}</td>
+                <td>{{ order.rentalEndDate | date }}</td>
+                <td>{{ order.comment }}</td>
+                <td>
+                    <a [routerLink]="['/orders', order.id]"><i class="fas fa-edit"></i></a>&nbsp;
+                    <a href="#"><i class="fas fa-trash-alt" (click)="deleteOrder(order.id); false"></i></a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
