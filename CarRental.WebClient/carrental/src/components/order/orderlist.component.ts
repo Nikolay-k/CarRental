@@ -1,4 +1,4 @@
-﻿import { Component } from '@angular/core';
+﻿import { Component, OnInit } from '@angular/core';
 import { HttpService } from './../../services/http.service';
 import { GetFormComponent } from './../getform.component';
 import { OrderListViewModel } from './../../models/order/order.viewmodel';
@@ -7,13 +7,17 @@ import { ResultResponseModel } from './../../models/result.responsemodel';
 @Component({
     templateUrl: './orderlist.component.html'
 })
-export class OrderListComponent extends GetFormComponent<OrderListViewModel, never> {
+export class OrderListComponent extends GetFormComponent<OrderListViewModel, never> implements OnInit {
     constructor(
         httpService: HttpService) {
         super(httpService);
 
         this.getUrl = '/api/Orders';
         this.model = new OrderListViewModel();
+    }
+
+    ngOnInit(): void {
+        this.OnInit();
     }
 
     private getOrderIndexById(orderId: number): number {

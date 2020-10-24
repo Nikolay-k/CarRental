@@ -1,11 +1,9 @@
-﻿import { Directive, OnInit } from '@angular/core';
-import { HttpService } from './../services/http.service';
+﻿import { HttpService } from './../services/http.service';
 import { GetFormResponseModel } from './../models/getform.responsemodel';
 import { PostFormResponseModel } from './../models/postform.responsemodel';
 import { ResultResponseModel } from './../models/result.responsemodel';
 
-@Directive()
-export abstract class PostFormComponent<TModel, TBag, TPostFormResponseModel extends PostFormResponseModel> implements OnInit {
+export abstract class PostFormComponent<TModel, TBag, TPostFormResponseModel extends PostFormResponseModel> {
     constructor(private readonly httpService: HttpService) { }
 
     protected getUrl = '';
@@ -20,7 +18,7 @@ export abstract class PostFormComponent<TModel, TBag, TPostFormResponseModel ext
         return new PostFormResponseModel() as TPostFormResponseModel;
     }
 
-    ngOnInit(): void {
+    protected OnInit(): void {
         if (this.getUrl) {
             this.httpService.getForm<GetFormResponseModel<TModel, TBag>>(this.getUrl, this.getQuery)
                 .subscribe(response => {

@@ -1,10 +1,8 @@
-﻿import { Directive, OnInit } from '@angular/core';
-import { HttpService } from './../services/http.service';
+﻿import { HttpService } from './../services/http.service';
 import { GetFormResponseModel } from './../models/getform.responsemodel';
 import { ResultResponseModel } from './../models/result.responsemodel';
 
-@Directive()
-export abstract class GetFormComponent<TModel, TBag> implements OnInit {
+export abstract class GetFormComponent<TModel, TBag> {
     constructor(protected readonly httpService: HttpService) { }
 
     protected getUrl = '';
@@ -13,7 +11,7 @@ export abstract class GetFormComponent<TModel, TBag> implements OnInit {
     bag = {} as TBag;
     result = new ResultResponseModel();
 
-    ngOnInit(): void {
+    protected OnInit(): void {
         if (this.getUrl) {
             this.httpService.getForm<GetFormResponseModel<TModel, TBag>>(this.getUrl, this.getQuery)
                 .subscribe(response => {
