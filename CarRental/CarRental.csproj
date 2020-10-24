@@ -2,10 +2,7 @@
 
 	<PropertyGroup>
 		<TargetFramework>netcoreapp3.1</TargetFramework>
-		<TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
-		<TypeScriptToolsVersion>3.1</TypeScriptToolsVersion>
 		<LangVersion>latest</LangVersion>
-		<IsPackable>false</IsPackable>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -18,45 +15,11 @@
 		<DebugSymbols>false</DebugSymbols>
 	</PropertyGroup>
 
-	<ItemGroup Condition="'$(Configuration)' != 'Debug'">
-		<Content Remove="appsettings.Development.json" />
-		<Content Remove="web.*.config" />
-		<Content Remove="package*.json" />
-		<Content Remove="tsconfig.json" />
-	</ItemGroup>
-
 	<ItemGroup>
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.7" />
 		<PackageReference Include="NLog" Version="4.6.7" />
 		<PackageReference Include="NLog.Web.AspNetCore" Version="4.9.0" />
 	</ItemGroup>
-
-	<ItemGroup>
-		<Folder Include="Views\ClientApp\" />
-	</ItemGroup>
-
-	<Target Name="DebugWebpackBuild" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug'">
-		<Message Importance="high" Text="Webpack build..." />
-		<Exec Command="node node_modules/webpack/bin/webpack.js --env.environment=development --env.virtualPath=/CarRental" />
-	</Target>
-
-	<Target Name="ReleaseWebpackBuild" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Release'">
-		<Message Importance="high" Text="Webpack build..." />
-		<Exec Command="npm install" />
-		<Exec Command="node node_modules/webpack/bin/webpack.js --env.environment=production" />
-	</Target>
-
-	<ItemGroup>
-		<JsLibJqueryFiles Include="node_modules\jquery\dist\**\*.*" />
-		<JsLibPopperFiles Include="node_modules\popper.js\dist\umd\**\*.*" />
-		<JsLibBootstrapFiles Include="node_modules\bootstrap\dist\js\**\*.*" />
-	</ItemGroup>
-
-	<Target Name="CopyJsLibFiles" AfterTargets="Build">
-		<Copy SourceFiles="@(JsLibJqueryFiles)" DestinationFiles="@(JsLibJqueryFiles->'wwwroot\lib\jquery\%(RecursiveDir)%(Filename)%(Extension)')" />
-		<Copy SourceFiles="@(JsLibPopperFiles)" DestinationFiles="@(JsLibPopperFiles->'wwwroot\lib\popper\%(RecursiveDir)%(Filename)%(Extension)')" />
-		<Copy SourceFiles="@(JsLibBootstrapFiles)" DestinationFiles="@(JsLibBootstrapFiles->'wwwroot\lib\bootstrap\%(RecursiveDir)%(Filename)%(Extension)')" />
-	</Target>
 
 	<ItemGroup>
 		<ProjectReference Include="..\CarRental.Context\CarRental.Context.csproj" />
