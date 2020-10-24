@@ -11,7 +11,7 @@ export class UserListComponent extends GetFormComponent<UserListViewModel, never
         httpService: HttpService) {
         super(httpService);
 
-        this.getUrl = '/api/Users';
+        this.getUrl = 'users';
         this.model = new UserListViewModel();
     }
 

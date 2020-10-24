@@ -12,7 +12,7 @@ export class OrderListComponent extends GetFormComponent<OrderListViewModel, nev
         httpService: HttpService) {
         super(httpService);
 
-        this.getUrl = '/api/Orders';
+        this.getUrl = 'orders';
         this.model = new OrderListViewModel();
     }
 
@@ -30,7 +30,7 @@ export class OrderListComponent extends GetFormComponent<OrderListViewModel, nev
     }
 
     deleteOrder(orderId: number): void {
-        this.httpService.deleteForm<ResultResponseModel>('/api/Orders', `/${orderId}`)
+        this.httpService.deleteForm<ResultResponseModel>('orders', `/${orderId}`)
             .subscribe(response => {
                 const responseModel = Object.assign(new ResultResponseModel(), response);
                 this.result = responseModel;

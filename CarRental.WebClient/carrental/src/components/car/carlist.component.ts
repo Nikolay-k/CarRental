@@ -11,7 +11,7 @@ export class CarListComponent extends GetFormComponent<CarListViewModel, never> 
         httpService: HttpService) {
         super(httpService);
 
-        this.getUrl = '/api/Cars';
+        this.getUrl = 'cars';
         this.model = new CarListViewModel();
     }
 

@@ -17,6 +17,8 @@ namespace CarRental
 
         public IConfiguration Configuration { get; }
 
+        private const string CorsPolicy = "CorsPolicy";
+
         public void ConfigureServices(IServiceCollection services)
         {
             var cultureInfo = new CultureInfo("en-US");
@@ -24,6 +26,20 @@ namespace CarRental
             CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
 
             ConfigureInjector(services);
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: CorsPolicy,
+                    builder =>
+                    {
+                        builder
+                            .WithOrigins(
+                                "http://localhost:4200"
+                                )
+                            .AllowAnyMethod()
+                            .AllowAnyHeader();
+                    });
+            });
 
             services.AddControllers()
                 .AddNewtonsoftJson(options =>
@@ -42,6 +58,8 @@ namespace CarRental
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors(CorsPolicy);
 
             app.UseEndpoints(endpoints =>
             {

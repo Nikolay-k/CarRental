@@ -15,10 +15,10 @@ export class OrderEditComponent extends PostFormComponent<OrderViewModel, OrderV
         httpService: HttpService) {
         super(httpService);
 
-        this.getUrl = '/api/Orders';
+        this.getUrl = 'orders';
         const id = this.route.snapshot.paramMap.get('id');
         this.getQuery = `/${id}`;
-        this.postUrl = '/api/Orders';
+        this.postUrl = 'orders';
         this.model = new OrderViewModel();
         this.bag = new OrderViewBag();
         this.onPostFormResponseReceived = () => this.postFormResponseReceivedHandler();
