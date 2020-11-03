@@ -57,6 +57,8 @@ namespace CarRental
 
             app.UseHttpsRedirection();
 
+            app.UseFileServer(); //for serving index.html and other static on run
+
             app.UseRouting();
 
             app.UseCors(CorsPolicy);
