@@ -1,0 +1,113 @@
+﻿//https://fontawesome.com
+@import "../../node_modules/@fortawesome/fontawesome-free/scss/solid.scss";
+@import "../../node_modules/@fortawesome/fontawesome-free/scss/fontawesome.scss";
+
+//https://getbootstrap.com
+@import "../../node_modules/bootstrap/scss/bootstrap.scss";
+
+//https://www.creative-tim.com/product/now-ui-kit-angular
+@import "./now-ui-kit.scss";
+
+//bootstrap fix
+.custom-select {
+    -webkit-appearance: none;
+}
+
+.form-check {
+    padding-left: 0;
+}
+
+.navbar-light .navbar-toggler {
+    color: $white-color;
+    border-color: $white-color;
+}
+
+.navbar .navbar-nav {
+    .nav-item.active .nav-link:not(.btn),
+    .nav-item .nav-link:not(.btn):focus,
+    .nav-item .nav-link:not(.btn):hover,
+    .nav-item .nav-link:not(.btn):active {
+        color: $white-color;
+    }
+}
+
+.invalid-tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+//now-ui-kit-angular fix
+.form-group {
+    margin-bottom: $form-group-margin-bottom;
+}
+
+.form-group, .input-group {
+    .form-control {
+        padding: 6px 18px 5px 18px;
+    }
+}
+
+.input-group {
+    margin-bottom: 0;
+}
+
+.input-group .input-group-append .input-group-text {
+    padding-left: 10px;
+    padding-right: 13px;
+    cursor: pointer;
+}
+
+.input-group-text {
+    i {
+        height: 12px;
+    }
+}
+
+.alert {
+    border-radius: 0.25rem;
+    padding-bottom: 5px;
+    padding-top: 10px;
+}
+
+.alert .alert-icon {
+    margin-right: 20px;
+    margin-top: 5px;
+}
+
+.alert i.fas {
+    font-size: 48px;
+}
+
+.alert strong {
+    font-size: inherit;
+}
+
+.navbar .navbar-toggler {
+    width: 43px;
+    height: 32px;
+}
+
+.form-control {
+    &[ngbDatepicker] {
+        &[readonly] {
+            background-color: inherit;
+            color: inherit;
+            cursor: inherit;
+        }
+    }
+}
+
+//add-ons
+.has-input-group {
+}
+
+.col-form-label-condensed {
+    padding-top: 0px;
+    line-height: 20px;
+}
+
+.required:after {
+    content: "*";
+    color: $danger-color;
+    font-weight: bold;
+}

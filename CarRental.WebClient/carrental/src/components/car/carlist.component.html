@@ -1,0 +1,28 @@
+﻿<div id="carListComponent" class="mx-auto py-md-5 py-3">
+    <div class="row">
+        <app-form-response class="col" [model]="result"></app-form-response>
+    </div>
+    <h2 class="text-center">Car list</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Brand</th>
+                <th scope="col">Model</th>
+                <th scope="col">Class</th>
+                <th scope="col">Issue year</th>
+                <th scope="col">Registration number</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let car of model.cars; index as i">
+                <th scope="row">{{ i + 1 }}</th>
+                <td>{{ car.brand }}</td>
+                <td>{{ car.model }}</td>
+                <td>{{ car.class }}</td>
+                <td>{{ car.issueYear }}</td>
+                <td>{{ car.registrationNumber }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

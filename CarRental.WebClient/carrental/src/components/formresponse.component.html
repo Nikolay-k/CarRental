@@ -1,0 +1,26 @@
+﻿<ngb-alert [type]="'success'" [dismissible]="false" *ngIf="model.success && model.message">
+    <div class="d-flex flex-row">
+        <div class="alert-icon">
+            <i class="fas fa-thumbs-up"></i>
+        </div>
+        <div>
+            <strong>Success</strong>
+            <ul class="list-unstyled">
+                <li>{{model.message}}</li>
+            </ul>
+        </div>
+    </div>
+</ngb-alert>
+<ngb-alert [type]="'danger'" [dismissible]="false" *ngIf="!model.success && model.errors.length>0">
+    <div class="d-flex flex-row">
+        <div class="alert-icon">
+            <i class="fas fa-life-ring"></i>
+        </div>
+        <div>
+            <strong>Failure</strong>
+            <ul class="list-unstyled">
+                <li *ngFor="let error of model.errors">{{error}}</li>
+            </ul>
+        </div>
+    </div>
+</ngb-alert>
