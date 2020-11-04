@@ -17,6 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "baseHref": "/CarRental/",
             "outputPath": "dist",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -38,6 +39,7 @@
           },
           "configurations": {
             "production": {
+              "baseHref": "/",
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",

@@ -66,6 +66,8 @@ namespace CarRental
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+
+                endpoints.MapFallbackToFile("index.html"); //for redirect to index.html
             });
         }
     }
