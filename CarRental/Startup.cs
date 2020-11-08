@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -8,6 +9,8 @@ using System.Globalization;
 
 namespace CarRental
 {
+    using Context;
+
     public partial class Startup
     {
         public Startup(IConfiguration configuration)
@@ -26,6 +29,9 @@ namespace CarRental
             CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
 
             ConfigureInjector(services);
+
+            services.AddDbContext<AppDbContext>(options =>
+                options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddCors(options =>
             {

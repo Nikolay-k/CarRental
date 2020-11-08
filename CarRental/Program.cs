@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NLog;
 using NLog.Targets;
@@ -8,6 +9,8 @@ using System.Runtime.InteropServices;
 
 namespace CarRental
 {
+    using Context;
+
     public class Program
     {
         public static void Main(string[] args)
@@ -27,6 +30,13 @@ namespace CarRental
                 logger.Debug("Site is being initialized");
 
                 var host = CreateHostBuilder(args).Build();
+
+                using (var scope = host.Services.CreateScope())
+                {
+                    var serviceProvider = scope.ServiceProvider;
+
+                    DbInitializer.Initialize(serviceProvider);
+                }
 
                 logger.Debug("Site starts");
 

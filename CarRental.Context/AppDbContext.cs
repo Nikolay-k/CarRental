@@ -10,6 +10,7 @@ namespace CarRental.Context
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            MainModelBuilder.BuildModel(builder);
             UserModelBuilder.BuildModel(builder);
             CarModelBuilder.BuildModel(builder);
             OrderModelBuilder.BuildModel(builder);
