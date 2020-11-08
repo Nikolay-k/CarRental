@@ -17,10 +17,10 @@ namespace CarRental.Context
         {
             var dbPath = "";
 
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            //if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
                 dbPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "db");
-            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-                dbPath = "/home/logfiles";
+            //else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+                //dbPath = "/home/db";
 
             if (!Directory.Exists(dbPath))
                 Directory.CreateDirectory(dbPath);
