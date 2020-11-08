@@ -1,12 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
 
 namespace CarRental.Context
 {
-    using Infrastructure.DAL.Context;
     using Infrastructure.Entities;
     using Infrastructure.Storage;
 
@@ -16,78 +14,70 @@ namespace CarRental.Context
         {
             try
             {
-                // migration
-                var contextCreator = serviceProvider.GetRequiredService<IContextCreator>();
-                using (var context = contextCreator.CreateContext())
+                using var unitOfWork = serviceProvider.GetRequiredService<IUnitOfWork>();
+
+                // users
+                if (!unitOfWork.UserRepository.Query.Any())
                 {
-                    context.Database.Migrate();
+                    var user = new User
+                    {
+                        Surname = "Petrov",
+                        Name = "Ivan",
+                        BirthDate = DateTime.Parse("1975-08-22"),
+                        DrivingLicenseNumber = "AA365789"
+                    };
+                    unitOfWork.UserRepository.AddObject(user);
+                    user = new User
+                    {
+                        Surname = "Sidorov",
+                        Name = "Alex",
+                        BirthDate = DateTime.Parse("1980-10-24"),
+                        DrivingLicenseNumber = "AB663424"
+                    };
+                    unitOfWork.UserRepository.AddObject(user);
+                    user = new User
+                    {
+                        Surname = "Vetrov",
+                        Name = "Vasiliy",
+                        BirthDate = DateTime.Parse("2001-09-01"),
+                        DrivingLicenseNumber = "AF555232"
+                    };
+                    unitOfWork.UserRepository.AddObject(user);
                 }
 
-                using (var unitOfWork = serviceProvider.GetRequiredService<IUnitOfWork>())
+                // cars
+                if (!unitOfWork.CarRepository.Query.Any())
                 {
-                    // users
-                    if (!unitOfWork.UserRepository.Query.Any())
+                    var car = new Car
                     {
-                        var user = new User
-                        {
-                            Surname = "Petrov",
-                            Name = "Ivan",
-                            BirthDate = DateTime.Parse("1975-08-22"),
-                            DrivingLicenseNumber = "AA365789"
-                        };
-                        unitOfWork.UserRepository.AddObject(user);
-                        user = new User
-                        {
-                            Surname = "Sidorov",
-                            Name = "Alex",
-                            BirthDate = DateTime.Parse("1980-10-24"),
-                            DrivingLicenseNumber = "AB663424"
-                        };
-                        unitOfWork.UserRepository.AddObject(user);
-                        user = new User
-                        {
-                            Surname = "Vetrov",
-                            Name = "Vasiliy",
-                            BirthDate = DateTime.Parse("2001-09-01"),
-                            DrivingLicenseNumber = "AF555232"
-                        };
-                        unitOfWork.UserRepository.AddObject(user);
-                    }
-
-                    // cars
-                    if (!unitOfWork.CarRepository.Query.Any())
+                        Brand = "Ford",
+                        Model = "Focus",
+                        Class = "Econom",
+                        IssueYear = 2015,
+                        RegistrationNumber = "A2046ST"
+                    };
+                    unitOfWork.CarRepository.AddObject(car);
+                    car = new Car
                     {
-                        var car = new Car
-                        {
-                            Brand = "Ford",
-                            Model = "Focus",
-                            Class = "Econom",
-                            IssueYear = 2015,
-                            RegistrationNumber = "A2046ST"
-                        };
-                        unitOfWork.CarRepository.AddObject(car);
-                        car = new Car
-                        {
-                            Brand = "Opel",
-                            Model = "Corsa",
-                            Class = "Econom",
-                            IssueYear = 2010,
-                            RegistrationNumber = "B6654GT"
-                        };
-                        unitOfWork.CarRepository.AddObject(car);
-                        car = new Car
-                        {
-                            Brand = "BMW",
-                            Model = "X5",
-                            Class = "Business",
-                            IssueYear = 2019,
-                            RegistrationNumber = "D3553DD"
-                        };
-                        unitOfWork.CarRepository.AddObject(car);
-                    }
-
-                    unitOfWork.Context.SaveChanges();
+                        Brand = "Opel",
+                        Model = "Corsa",
+                        Class = "Econom",
+                        IssueYear = 2010,
+                        RegistrationNumber = "B6654GT"
+                    };
+                    unitOfWork.CarRepository.AddObject(car);
+                    car = new Car
+                    {
+                        Brand = "BMW",
+                        Model = "X5",
+                        Class = "Business",
+                        IssueYear = 2019,
+                        RegistrationNumber = "D3553DD"
+                    };
+                    unitOfWork.CarRepository.AddObject(car);
                 }
+
+                unitOfWork.Context.SaveChanges();
             }
             catch (Exception e)
             {
