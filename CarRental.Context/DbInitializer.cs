@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
@@ -16,7 +15,6 @@ namespace CarRental.Context
             try
             {
                 using var unitOfWork = serviceProvider.GetRequiredService<IUnitOfWork>();
-                unitOfWork.Context.Database.Migrate();
 
                 // users
                 if (!unitOfWork.UserRepository.Query.Any())
@@ -45,8 +43,6 @@ namespace CarRental.Context
                         DrivingLicenseNumber = "AF555232"
                     };
                     unitOfWork.UserRepository.AddObject(user);
-
-                    unitOfWork.Context.SaveChanges();
                 }
 
                 // cars
@@ -79,9 +75,9 @@ namespace CarRental.Context
                         RegistrationNumber = "D3553DD"
                     };
                     unitOfWork.CarRepository.AddObject(car);
-
-                    unitOfWork.Context.SaveChanges();
                 }
+
+                unitOfWork.Context.SaveChanges();
             }
             catch (Exception e)
             {

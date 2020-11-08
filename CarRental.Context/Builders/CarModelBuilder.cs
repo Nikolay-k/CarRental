@@ -11,27 +11,21 @@ namespace CarRental.Context.Builders
             builder.Entity<Car>(b =>
             {
                 b.Property(x => x.Id)
-                    .HasColumnType("INTEGER")
                     .ValueGeneratedOnAdd();
                 b.Property(x => x.Brand)
-                    .HasColumnType("TEXT")
                     .IsRequired()
                     .IsUnicode()
                     .HasMaxLength(20);
                 b.Property(x => x.Model)
-                    .HasColumnType("TEXT")
                     .IsRequired()
                     .IsUnicode()
                     .HasMaxLength(20);
                 b.Property(x => x.Class)
-                    .HasColumnType("TEXT")
                     .IsRequired()
                     .IsUnicode()
                     .HasMaxLength(10);
-                b.Property(x => x.IssueYear)
-                    .HasColumnType("INTEGER");
+                b.Property(x => x.IssueYear);
                 b.Property(x => x.RegistrationNumber)
-                    .HasColumnType("TEXT")
                     .IsRequired()
                     .IsUnicode()
                     .HasMaxLength(10);

@@ -11,18 +11,12 @@ namespace CarRental.Context.Builders
             builder.Entity<Order>(b =>
             {
                 b.Property(x => x.Id)
-                    .HasColumnType("INTEGER")
                     .ValueGeneratedOnAdd();
-                b.Property(x => x.UserId)
-                    .HasColumnType("INTEGER");
-                b.Property(x => x.CarId)
-                    .HasColumnType("INTEGER");
-                b.Property(x => x.RentalStartDate)
-                    .HasColumnType("TEXT");
-                b.Property(x => x.RentalEndDate)
-                    .HasColumnType("TEXT");
+                b.Property(x => x.UserId);
+                b.Property(x => x.CarId);
+                b.Property(x => x.RentalStartDate);
+                b.Property(x => x.RentalEndDate);
                 b.Property(x => x.Comment)
-                    .HasColumnType("TEXT")
                     .IsUnicode()
                     .HasMaxLength(200);
 
